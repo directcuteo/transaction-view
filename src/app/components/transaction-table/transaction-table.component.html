@@ -1,0 +1,45 @@
+<div class="floating-block">
+
+  <div class="actions"
+       (click)="getRecentTransactions()">
+    <mat-icon svgIcon="history"
+              class="icon-recent"></mat-icon>
+    <div>Recent transactions</div>
+  </div>
+  <cdk-virtual-scroll-viewport itemSize="50"
+                               class="virtual-scroll-viewport">
+    <ng-container *ngIf="transactions | async as transactionList">
+      <table class="transaction-table">
+        <thead>
+        <tr class="table-row table-head-row">
+          <th class="table-head-cell table-cell">Type</th>
+          <th class="table-head-cell table-cell">Amount XTZ ( USD )</th>
+          <th class="table-head-cell table-cell">Status</th>
+          <th class="table-head-cell table-cell">Date</th>
+          <th class="table-head-cell table-cell">Address</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-row"
+            *cdkVirtualFor="let transaction of transactionList">
+          <td class="table-cell">
+          <span [class.green]="transaction.type === RowType.Transaction"
+                [class.yellow]="transaction.type === RowType.Bake"
+                [class.gray]="transaction.type === RowType.SeedNonceRevelation"
+                class="type-cell">{{ transaction.type }}</span>
+          </td>
+          <td class="table-cell">{{ transaction.volume }}</td>
+          <td class="table-cell">{{ transaction.status }}</td>
+          <td class="table-cell">{{ transaction.time | date: 'MMM d y, hh:mm' }}</td>
+          <td class="table-cell"
+              [matTooltip]="transaction.sender"
+              matTooltipPosition="above">{{ transaction.minifiedAddress }}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div #scrollAnchor
+           [style.height.px]="transactionList.length ? 1 : 0"></div>
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+
+</div>

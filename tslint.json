@@ -30,18 +30,10 @@
     "max-classes-per-file": false,
     "max-line-length": [
       true,
-      140
+      180
     ],
     "member-ordering": [
-      true,
-      {
-        "order": [
-          "static-field",
-          "instance-field",
-          "static-method",
-          "instance-method"
-        ]
-      }
+      true
     ],
     "no-console": [
       true,
